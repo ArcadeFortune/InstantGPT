@@ -13,17 +13,20 @@ def show_message_box():
     pyautogui.hotkey('ctrl', 'c')    
     current_text = pyperclip.paste()
 
-    if current_text != previous_text:
-        # message box
-        win32gui.MessageBox(
-            None,
-            current_text,
-            "InstantGPT says:",
-            win32con.MB_OK | win32con.MB_SETFOREGROUND
-        )
-    else: 
-        # open ChatGPT for convenience
-        webbrowser.open('https://chat.openai.com')
+    if current_text:
+        # There is highlighted text
+        if current_text != previous_text:
+            # Show message box
+            win32gui.MessageBox(
+                None,
+                current_text,
+                "InstantGPT says:",
+                win32con.MB_OK | win32con.MB_SETFOREGROUND
+            )
+        else:
+            # No highlighted text, open OpenAI website
+            webbrowser.open('https://chat.openai.com')
+            
         
     previous_text = current_text
     
