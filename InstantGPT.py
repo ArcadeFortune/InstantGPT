@@ -83,6 +83,7 @@ def sendRequest(current_text):
     return 'Error:', str(e)
 
 def loadLoadingWindow():
+  print('loading answer...')
   global received
   global loadingWindow
   global content_label  
@@ -107,12 +108,14 @@ def load_loading_window():
   index = 0
 
   def update_content():
+    print('loading answer...')
     nonlocal index
     if not received:
       content_label.config(text=loading_texts[index])
       index = (index + 1) % len(loading_texts)
       loadingWindow.after(500, update_content)
     else:
+      print('answer received')
       loadingWindow.destroy()
 
 
@@ -120,10 +123,10 @@ def load_loading_window():
 
 def startThreads():
   print('starting threads...')
-  # thread1 = threading.Thread(target=loadLoadingWindow)
+  thread1 = threading.Thread(target=loadLoadingWindow)
   thread2 = threading.Thread(target=instantGPT)
 
-  # thread1.start()
+  thread1.start()
   thread2.start()
 
 keyboard.add_hotkey("ctrl+shift+o", startThreads)
