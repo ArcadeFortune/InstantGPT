@@ -41,7 +41,6 @@ def send_request():
         win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0)
 
 def create_window():
-    # ... Window creation code remains the same ...
     def window_proc(hwnd, msg, wparam, lparam):
       if msg == win32con.WM_CLOSE:
           win32gui.DestroyWindow(hwnd)
