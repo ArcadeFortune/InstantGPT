@@ -13,31 +13,31 @@ load_dotenv()
 key = os.getenv('key')
 openai.api_key = key
 
-previous_text = ""
 
 def show_message_box():
-    global previous_text
+    previous_text = ""
     # copy the highlighted text
     pyautogui.hotkey('ctrl', 'c')    
     current_text = pyperclip.paste()
-    message=[{"role": "user", "content": current_text}]
-    response = openai.Completion.create(
-        model="gpt-4",
-        max_tokens=150,
-        temperature=0.9,
-        messages=message,
-    )
-    
-    print (response)
+
     
 
     if current_text:
         # There is highlighted text
         if current_text != previous_text:
+            answer = ""
+            
+            message=[{"role": "user", "content": current_text}]
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=message,
+            )
+            answer = response['choices'][0]['message']['content']
+
             # Show message box
             win32gui.MessageBox(
                 None,
-                current_text,
+                answer,
                 "InstantGPT says:",
                 win32con.MB_OK | win32con.MB_SETFOREGROUND
             )
